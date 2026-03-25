@@ -1,16 +1,20 @@
+"use client";
+
 import Image from "next/image";
+import Logo from "./components/logo";
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
 
 export default function Home() {
+  const tasks = useQuery(api.tasks.get);
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
+        <Logo
+          type="color"
           width={100}
           height={20}
-          priority
+          className="dark:invert h3h3"
         />
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
@@ -58,6 +62,10 @@ export default function Home() {
           >
             Documentation
           </a>
+        </div>
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <h2>Database test:</h2>
+          {tasks?.map(({ _id, text }) => <div key={_id}>{text}</div>)}
         </div>
       </main>
     </div>
