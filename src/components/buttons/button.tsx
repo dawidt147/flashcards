@@ -1,22 +1,19 @@
-import { ButtonProps } from "../../types/interfaces";
+import type { ButtonProps } from "../../types/interfaces";
 
-const Button: React.FC<ButtonProps> = ({
-  id,
-  label,
-  type,
-  name,
-  value,
+const Button = ({
   className,
-}) => {
+  label,
+  children,
+  type = "button",
+  ...rest
+}: ButtonProps) => {
   return (
     <button
-      id={id}
       type={type}
-      name={name}
-      value={value}
-      className={`button ${className}`}
+      className={["button", className].filter(Boolean).join(" ")}
+      {...rest}
     >
-      {label}
+      {children ?? label}
     </button>
   );
 };

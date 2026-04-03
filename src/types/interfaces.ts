@@ -1,3 +1,5 @@
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+
 export interface ImageProps {
     width: number;
     height: number;
@@ -8,14 +10,11 @@ export interface ImageProps {
 export interface LogoProps extends ImageProps {
     type: "default" | "white"
 }
-export interface ButtonProps {
-    id: string;
-    label: string;
-    type: "button" | "submit" | "reset"
-    name?: string;
-    value?: string;
-    className?: string;
-}
+
+/** Native button props + optional `label` when you prefer a string prop over `children`. */
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+    label?: ReactNode;
+};
 export interface SearchBarProps {
     placeholder: string;
 }
