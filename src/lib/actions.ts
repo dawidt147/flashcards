@@ -1,6 +1,6 @@
 'use server';
  
-import { signIn } from '@/root/auth';
+import { signIn, signUp } from '@/root/auth';
 import { AuthError } from 'next-auth';
  
 export async function authenticate(
@@ -17,6 +17,20 @@ export async function authenticate(
         default:
           return 'Something went wrong.';
       }
+    }
+    throw error;
+  }
+}
+
+export async function createAccount(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signUp(formData);
+  } catch (error) {
+    if (error) {
+      return 'Register error.';
     }
     throw error;
   }

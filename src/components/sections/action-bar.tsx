@@ -1,27 +1,44 @@
+'use client';
+
 import Button from "../buttons/button";
 import Link from 'next/link';
-import { signOut } from '@/root/auth';
+import { useSession, signOut } from "next-auth/react"
 
 export default function ActionBar() {
+    const { data: session } = useSession();
+    if ( session ) {
+        return (
+            <section className="action-bar flex ">
+                Signed in as {session?.user?.email} <br />
+                <Button
+                    id="sign-out"
+                    label="Sign Out"
+                    type="button"
+                    className="bg-primary hover:bg-primary/90 focus:bg-primary/90"
+                    onClick={() => signOut()}
+                />
+            </section>
+        );
+    }
+
     return (
-        <section className="action-bar">
-            <Link href="/log-in">
+        <section className="action-bar flex gap-2">
+            <Link href="/sign-up">
+                <Button
+                id="log-in"
+                label="Sign up"
+                type="button"
+                className="bg-secondary hover:bg-secondary/90 focus:bg-secondary/90"
+                />
+            </Link>
+            <Link href="/login">
                 <Button
                 id="log-in"
                 label="Log in"
                 type="button"
+                className="bg-primary hover:bg-primary/90 focus:bg-primary/90"
                 />
             </Link>
-            <form
-                action={async () => {
-                    'use server';
-                    await signOut({ redirectTo: '/' });
-                }}
-            >
-                <button className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                    <div className="hidden md:block">Sign Out</div>
-                </button>
-            </form>
         </section>
     );
 }

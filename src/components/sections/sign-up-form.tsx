@@ -8,14 +8,14 @@ import {
 } from 'lucide-react';
 import Button from "@/components/buttons/button"
 import { useActionState } from 'react';
-import { authenticate } from 'lib/actions';
+import { createAccount } from 'lib/actions';
 import { useSearchParams } from 'next/navigation';
  
-export default function LoginForm() {
+export default function SignUpForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
   const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
+    createAccount,
     undefined,
   );
  
@@ -23,7 +23,7 @@ export default function LoginForm() {
     <form action={formAction} className="space-y-3 m-auto">
       <div className="flex-1 px-6 pb-4 pt-8">
         <h1 className="mb-3 text-2xl">
-          Log in
+          Register
         </h1>
         <div className="w-full">
           <div>
@@ -73,7 +73,7 @@ export default function LoginForm() {
           disabled={isPending}
           className="bg-primary mt-4 flex w-full items-center justify-center gap-2"
         >
-          Log in
+          Sign Up
           <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div
