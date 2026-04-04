@@ -2,6 +2,11 @@
  
 import { signIn, signUp } from '@/root/auth';
 import { AuthError } from 'next-auth';
+
+type CreateAccountState = {
+  error?: string;
+  success?: string;
+}
  
 export async function authenticate(
   prevState: string | undefined,
@@ -23,14 +28,20 @@ export async function authenticate(
 }
 
 export async function createAccount(
-  prevState: string | undefined,
+  prevState: CreateAccountState | undefined,
   formData: FormData,
-) {
-  try {
-    await signUp(formData);
+): Promise<CreateAccountState> {
+    try {
+      const result = await signUp(formData);
+
+      if (typeof result == "string") {
+        return { error: result };
+      }
+
+      return { success: "Registered successfully :)" };
   } catch (error) {
     if (error) {
-      return 'Register error.';
+      return { error: "Register error" };
     }
     throw error;
   }

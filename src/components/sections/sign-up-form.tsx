@@ -4,6 +4,7 @@ import {
   AtSign,
   KeyIcon,
   CircleAlert,
+  CircleCheck,
   ArrowRightIcon,
 } from 'lucide-react';
 import Button from "@/components/buttons/button"
@@ -14,10 +15,28 @@ import { useSearchParams } from 'next/navigation';
 export default function SignUpForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
-  const [errorMessage, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     createAccount,
     undefined,
   );
+
+  let message: React.ReactNode = null;
+
+  if (state?.error) {
+    message = (
+        <>
+            <CircleAlert className="h-5 w-5 text-red-500" />
+            <p className="text-sm text-red-500">{state.error}</p>
+        </>
+    );
+  } else if (state?.success) {
+    message = (
+        <>
+            <CircleCheck className="h-5 w-5 text-green-500" />
+            <p className="text-sm text-green-500">{state.success}</p>
+        </>
+    );
+  }
  
   return (
     <form action={formAction} className="space-y-3 m-auto">
@@ -81,12 +100,7 @@ export default function SignUpForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
-            <>
-              <CircleAlert className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
-            </>
-          )}
+          {message}
         </div>
       </div>
     </form>

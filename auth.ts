@@ -45,7 +45,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 });
 
 export const signUp = async (formData: FormData) => {
-  const credentials = Object.fromEntries(formData)
+  console.log(formData);
+  const credentials = Object.fromEntries(formData);
+  console.log(credentials);
   const parsedCredentials = z
   .object({ email: z.email(), password: z.string().min(6) })
   .safeParse(credentials);
@@ -75,5 +77,5 @@ export const signUp = async (formData: FormData) => {
   }
 
   console.log('Invalid credentials');
-  return null;
+  return 'Invalid credentials';
 };
