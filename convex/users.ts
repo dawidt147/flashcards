@@ -3,12 +3,13 @@ import { v } from "convex/values";
 
 export const createUser = mutation({
   args: { 
-    userName: v.string(),
     email: v.string(),
-    password: v.string()
+    userName: v.string(),
+    password: v.string(),
+    status: v.string(),
   },
   handler: async (ctx, args) => {
-    return await ctx.db.insert("users", { userName: args.userName, email: args.email, password: args.password });
+    return await ctx.db.insert("users", { userName: args.userName, email: args.email, password: args.password, status: args.status });
   },
 });
 
@@ -43,4 +44,25 @@ export const getUserByUsername = query({
       .withIndex("byUsername", (q) => q.eq("userName", args.userName))
       .first();
     },
+});
+
+export const activateUser = mutation({
+  args: {
+    userId: v.id("users")
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get("users", args.userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (user.status !== "pending") {
+      return { alreadyActive: true as const };
+    }
+
+    await ctx.db.patch("users", args.userId, { status: "active" });
+
+    return { alreadyActive: false as const };
+  },
 });

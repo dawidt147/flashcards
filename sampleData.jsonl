@@ -1,1 +1,26 @@
-{"userName": "dawidt147","password": "password","email": "dawidt9882@icloud.com"}
+{"name":"siteTitle","value":"Flashcards"}
+{"name":"siteTagline","value":"Learn faster with decks that stick."}
+{"name":"siteUrl","value":"http://localhost:3000"}
+{"name":"siteLogoUrl","value":"/logo-default.svg"}
+{"name":"adminEmail","value":"admin@flashcards.example.com"}
+{"name":"contactEmail","value":"hello@flashcards.example.com"}
+{"name":"supportEmail","value":"support@flashcards.example.com"}
+{"name":"timezone","value":"Europe/Warsaw"}
+{"name":"locale","value":"en-US"}
+{"name":"currency","value":"PLN"}
+{"name":"addressLine1","value":"ul. Przykładowa 12"}
+{"name":"addressLine2","value":"Building A, Floor 3"}
+{"name":"addressCity","value":"Warsaw"}
+{"name":"addressRegion","value":"Masovian Voivodeship"}
+{"name":"addressPostalCode","value":"00-001"}
+{"name":"addressCountry","value":"PL"}
+{"name":"addressFormatted","value":"ul. Przykładowa 12, Building A, Floor 3, 00-001 Warsaw, Poland"}
+{"name":"companyLegalName","value":"Torbacz Sp. z o.o."}
+{"name":"taxId","value":"PL1234567890"}
+{"name":"socialGithub","value":"https://github.com/dawidt147/"}
+{"name":"socialLinkedin","value":"https://www.linkedin.com/company/flashcards-example"}
+{"name":"ogDefaultDescription","value":"Spaced repetition flashcards for languages, exams, and anything you want to memorize."}
+{"name":"copyrightHolder","value":"Torbacz company"}
+{"name":"maintenanceMode","value":"false"}
+{"name":"allowPublicSignup","value":"true"}
+{"name":"footerLegalNote","value":"All trademarks belong to their respective owners."}

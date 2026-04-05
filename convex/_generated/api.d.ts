@@ -8,7 +8,9 @@
  * @module
  */
 
+import type * as options from "../options.js";
 import type * as tasks from "../tasks.js";
+import type * as userMeta from "../userMeta.js";
 import type * as users from "../users.js";
 
 import type {
@@ -18,7 +20,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  options: typeof options;
   tasks: typeof tasks;
+  userMeta: typeof userMeta;
   users: typeof users;
 }>;
 
