@@ -25,9 +25,4 @@ export default defineSchema({
   })
   .index("byUserMeta", ["userId", "name"])
   .index("byNameAndValue", ["name", "value"]),
-
-  tasks: defineTable({
-    isCompleted: v.boolean(),
-    text: v.string(),
-  })
 });

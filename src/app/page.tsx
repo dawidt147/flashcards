@@ -8,8 +8,6 @@ import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
 export default function Home() {
-  const tasks = useQuery(api.tasks.get);
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <Header />
@@ -69,34 +67,6 @@ export default function Home() {
                 </p>
               </div>
             ))}
-          </div>
-
-          <div className="mx-auto flex w-full max-w-xl flex-col gap-4 rounded-2xl border border-dashed border-zinc-300 bg-white/80 p-6 dark:border-zinc-700 dark:bg-zinc-900/80">
-            <div className="flex items-center justify-between gap-2">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Convex sample data
-              </h2>
-              <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-medium text-primary">
-                Live
-              </span>
-            </div>
-            <ul className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-              {tasks === undefined && (
-                <li className="animate-pulse text-zinc-500">Loading…</li>
-              )}
-              {tasks?.length === 0 && (
-                <li className="text-zinc-500">No rows yet — add some in Convex.</li>
-              )}
-              {tasks?.map(({ _id, text }) => (
-                <li
-                  key={_id}
-                  className="flex items-center gap-2 rounded-lg bg-zinc-50 px-3 py-2 dark:bg-zinc-800"
-                >
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  {text}
-                </li>
-              ))}
-            </ul>
           </div>
 
           <div className="flex flex-col items-center gap-4 border-t border-zinc-200 pt-10 dark:border-zinc-800 sm:flex-row sm:justify-center">
