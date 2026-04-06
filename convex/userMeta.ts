@@ -41,3 +41,24 @@ export const getUserMetaByNameAndValue = query({
       .first();
   },
 });
+
+export const removeUserMeta = mutation({
+  args: {
+    userId: v.id("users"),
+    name: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const metaId = await ctx.db
+    .query("userMeta")
+    .withIndex("byUserMeta", (q) =>
+      q.eq("userId", args.userId).eq("name", args.name),
+    )
+    .first();
+
+    if (metaId) {
+      return await ctx.db.delete("userMeta", metaId?._id);
+    }
+
+    return metaId;
+  },
+});

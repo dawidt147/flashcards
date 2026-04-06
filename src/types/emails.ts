@@ -4,6 +4,17 @@ export interface EmailProps {
     company: string;
 }
 
+/** Absolute site origin for email assets (logo URL, footer links). */
+export interface EmailBrandingProps {
+    company: string;
+    siteUrl: string;
+}
+
+export interface EmailLogoProps {
+    siteUrl: string;
+    variant?: 'default' | 'white';
+}
+
 export interface WelcomeEmailProps extends EmailProps {
     activationLink: string;
 }

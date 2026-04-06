@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { activateUser } from '@/lib/convex/users';
-import { getUserMeta, getUserMetaByNameAndValue } from '@/lib/convex/userMeta';
+import { getUserMeta, getUserMetaByNameAndValue, removeUserMeta } from '@/lib/convex/userMeta';
 
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.pathname.split("/").pop() || "";
@@ -26,6 +26,9 @@ export async function GET(request: NextRequest) {
   }
 
   const result = await activateUser(activationToken.userId);
+
+  await removeUserMeta(activationToken.userId, "activationToken");
+  await removeUserMeta(activationToken.userId, "activationTokenExpiryDate");
 
   if (result.alreadyActive) {
     return NextResponse.redirect(new URL("/login?activated=already", request.nextUrl));

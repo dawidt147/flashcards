@@ -38,7 +38,9 @@ export async function createAccount(
         return { error: result };
       }
 
-      return { success: "Registered successfully :)" };
+      return {
+        success: 'Account created. Check your email for a link to confirm your address.',
+      };
   } catch (error) {
     if (error) {
       return { error: "Register error" };

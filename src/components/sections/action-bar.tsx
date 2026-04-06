@@ -8,8 +8,15 @@ export default function ActionBar() {
     const { data: session } = useSession();
     if ( session ) {
         return (
-            <section className="action-bar flex ">
-                Signed in as {session?.user?.email} <br />
+            <section className="action-bar flex gap-2">
+                <Link href="/dashboard">
+                    <Button
+                    id="dashboard"
+                    label="Dashboard"
+                    type="button"
+                    className="bg-secondary hover:bg-secondary/90 focus:bg-secondary/90"
+                    />
+                </Link>
                 <Button
                     id="sign-out"
                     label="Sign Out"

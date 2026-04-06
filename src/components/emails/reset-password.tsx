@@ -4,41 +4,40 @@ import {
   Container,
   Head,
   Html,
-  Link,
   Preview,
   Section,
   Tailwind,
   Text,
 } from '@react-email/components';
-import Logo from '@/components/logo';
+import { EmailFooter } from '@/components/emails/sections/footer';
+import { EmailHeader } from '@/components/emails/sections/header';
 import { ResetPasswordEmailProps } from '@/types/emails';
 
 export const ResetPasswordEmail = ({
-  userFirstname,
+  email,
+  userName,
+  company,
   resetPasswordLink,
 }: ResetPasswordEmailProps) => {
+  const brand = company.trim() || 'Flashcards';
+  const siteUrl = new URL(resetPasswordLink).origin;
+
   return (
     <Html>
       <Head />
-      <Preview>Reset your password</Preview>
+      <Preview>Reset your {brand} password</Preview>
       <Tailwind>
         <Body className="m-auto bg-zinc-50 py-8 font-sans">
           <Container className="mx-auto max-w-[465px] rounded-2xl border border-solid border-zinc-200 bg-white px-8 py-10 shadow-sm">
-            <Section className="mb-8">
-              <Logo
-                type="default"
-                width={100}
-                height={20}
-                className=""
-              />
-            </Section>
+            <EmailHeader company={brand} siteUrl={siteUrl} />
             <Section>
               <Text className="m-0 text-base font-normal leading-relaxed text-zinc-600">
-                Hi {userFirstname},
+                Hi {userName},
               </Text>
               <Text className="mt-4 text-base font-normal leading-relaxed text-zinc-600">
-                Someone recently requested a password reset for your account. If
-                this was you, you can set a new password here:
+                We received a request to reset the password for your account. If
+                you made this request, choose a new password using the button
+                below.
               </Text>
               <Section className="my-8 text-center">
                 <Button
@@ -49,20 +48,17 @@ export const ResetPasswordEmail = ({
                 </Button>
               </Section>
               <Text className="m-0 text-base font-normal leading-relaxed text-zinc-600">
-                If you don&apos;t want to change your password or didn&apos;t
-                request this, you can ignore this message.
-              </Text>
-              <Text className="mt-4 text-base font-normal leading-relaxed text-zinc-600">
-                For your security, please don&apos;t forward this email to
-                anyone.{' '}
-                <Link className="font-medium text-violet-600 underline" href={resetPasswordLink}>
-                  Security tips
-                </Link>
+                If you didn&apos;t request a password reset, you can ignore this
+                email — your password will stay the same. Don&apos;t forward this
+                email to anyone.
               </Text>
               <Text className="mt-6 text-base font-normal leading-relaxed text-zinc-600">
-                — The team
+                Thanks,
+                <br />
+                The {brand} team
               </Text>
             </Section>
+            <EmailFooter company={brand} siteUrl={siteUrl} />
           </Container>
         </Body>
       </Tailwind>

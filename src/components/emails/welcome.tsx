@@ -11,7 +11,8 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components';
-import Logo from '@/components/logo';
+import { EmailFooter } from '@/components/emails/sections/footer';
+import { EmailHeader } from '@/components/emails/sections/header';
 import { WelcomeEmailProps } from '@/types/emails';
 
 const WelcomeEmail = ({
@@ -20,7 +21,9 @@ const WelcomeEmail = ({
   company,
   activationLink,
 }: WelcomeEmailProps) => {
-  const previewText = `Activate your ${company} account — one click to get started`;
+  const brand = company.trim() || 'Flashcards';
+  const previewText = `Confirm your email to get started with ${brand}`;
+  const siteUrl = new URL(activationLink).origin;
 
   return (
     <Html>
@@ -29,29 +32,27 @@ const WelcomeEmail = ({
       <Tailwind>
         <Body className="m-auto bg-zinc-50 font-sans">
           <Container className="mx-auto mb-10 max-w-[465px] rounded-2xl border border-solid border-zinc-200 bg-white px-8 py-10 shadow-sm">
-            <Section className="mb-8">
-              <Logo type="default" width={100} height={20} className="" />
-            </Section>
+            <EmailHeader company={brand} siteUrl={siteUrl} />
             <Heading className="mx-0 my-0 mb-6 p-0 text-center text-2xl font-semibold tracking-tight text-zinc-900">
-              Welcome to <strong>{company}</strong>
+              Welcome to <strong>{brand}</strong>
             </Heading>
             <Text className="m-0 text-start text-sm leading-relaxed text-zinc-600">
-              Hello {userName},
+              Hi {userName},
             </Text>
             <Text className="mt-4 text-start text-sm leading-relaxed text-zinc-600">
-              Thanks for signing up. To finish creating your account, confirm your
-              email by clicking the button below. This link expires after a few
-              days for security.
+              Thanks for signing up. Confirm your email address to finish creating
+              your account — use the button below. For your security, this link
+              expires in 7 days.
             </Text>
             <Text className="mt-2 text-start text-xs text-zinc-500">
-              Signing up as: {email}
+              You registered with: {email}
             </Text>
             <Section className="my-8 text-center">
               <Button
                 className="rounded-full bg-violet-600 px-6 py-3 text-center text-sm font-semibold text-white no-underline"
                 href={activationLink}
               >
-                Activate your account
+                Confirm your email
               </Button>
             </Section>
             <Text className="m-0 text-start text-xs leading-relaxed text-zinc-500">
@@ -64,10 +65,11 @@ const WelcomeEmail = ({
               </Link>
             </Text>
             <Text className="mt-6 text-start text-sm text-zinc-600">
-              Cheers,
+              Thanks,
               <br />
-              The {company} team
+              The {brand} team
             </Text>
+            <EmailFooter company={brand} siteUrl={siteUrl} />
           </Container>
         </Body>
       </Tailwind>

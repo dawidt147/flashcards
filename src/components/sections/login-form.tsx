@@ -4,6 +4,7 @@ import {
   AtSign,
   KeyIcon,
   CircleAlert,
+  CircleCheck,
   ArrowRightIcon,
 } from 'lucide-react';
 import Button from "@/components/buttons/button"
@@ -13,7 +14,16 @@ import { useSearchParams } from 'next/navigation';
  
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'; 
+  const activatedMessageStatus = searchParams.get('activated');
+  let activatedMessage = '';
+  if (activatedMessageStatus === '1') {
+    activatedMessage =
+      'Your email is confirmed. You can sign in with your password below.';
+  } else if (activatedMessageStatus === 'already') {
+    activatedMessage =
+      'This account is already active. Sign in with your password below.';
+  }
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,
@@ -85,6 +95,12 @@ export default function LoginForm() {
             <>
               <CircleAlert className="h-5 w-5 text-red-500" />
               <p className="text-sm text-red-500">{errorMessage}</p>
+            </>
+          )}
+          {activatedMessage && (
+            <>
+                <CircleCheck className="h-5 w-5 text-green-500" />
+                <p className="text-sm text-green-500">{activatedMessage}</p>
             </>
           )}
         </div>

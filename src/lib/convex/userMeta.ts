@@ -26,3 +26,10 @@ export async function addUserMetaRow(
 ): Promise<void> {
   await getConvexClient().mutation(api.userMeta.addUserMeta, { userId, name, value });
 }
+
+export async function removeUserMeta(
+  userId: Id<"users">,
+  name: string,
+): Promise<Doc<"userMeta"> | null> {
+  return await getConvexClient().mutation(api.userMeta.removeUserMeta, { userId, name });
+}

@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
+import GoogleProvider from "next-auth/providers/google";
 import { authConfig } from './auth.config';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
@@ -70,6 +71,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         throw authError(errorCodes.invalidCredentials);
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    })
   ],
 });
 
@@ -104,8 +109,13 @@ export const signUp = async (formData: FormData) => {
       }
   
       if (userId) {
-        await SendWelcomeEmail(emailProps);
-        return userId;
+        try {
+          await SendWelcomeEmail(emailProps);
+        } catch (error) {
+          console.warn(error);
+        } finally {
+          return true;
+        }
       }
 
       return errorCodes.signUpUnknown;
