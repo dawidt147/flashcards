@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
 
 export default function Home() {
   return (

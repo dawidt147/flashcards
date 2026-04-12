@@ -7,10 +7,12 @@ import {
   CircleCheck,
   ArrowRightIcon,
 } from 'lucide-react';
-import Button from "@/components/buttons/button"
-import { useActionState } from 'react';
+import Button from "@/components/buttons/button";
+import GoogleLogo from "@/components/icons/google-logo";
+import { useActionState, Fragment } from 'react';
 import { authenticate } from 'lib/actions';
 import { useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
  
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -86,6 +88,16 @@ export default function LoginForm() {
           Log in
           <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
+        <div className='text-center mt-4'>or</div>
+        <Button
+          id="log-in-with-google"
+          type="button"
+          className="bg-primary mt-4 flex w-full items-center justify-between gap-2"
+          onClick={() => signIn('google', { callbackUrl: callbackUrl })}          
+        >
+          Log in with Google
+          <GoogleLogo width={16} height={16} className='block' />
+        </Button> 
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
