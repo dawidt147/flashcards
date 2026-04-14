@@ -13,19 +13,30 @@ import { useActionState, Fragment } from 'react';
 import { authenticate } from 'lib/actions';
 import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
- 
+
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'; 
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const activatedMessageStatus = searchParams.get('activated');
+  
   let activatedMessage = '';
-  if (activatedMessageStatus === '1') {
-    activatedMessage =
-      'Your email is confirmed. You can sign in with your password below.';
-  } else if (activatedMessageStatus === 'already') {
-    activatedMessage =
-      'This account is already active. Sign in with your password below.';
+  switch (activatedMessageStatus) {
+    case '1':
+      activatedMessage =
+        'Your email is confirmed. You can sign in with your password below.';
+      break;
+    case 'already':
+      activatedMessage =
+        'This account is already active. Sign in with your password below.';
+      break;
+    case 'oauth-already-pending':
+      activatedMessage =
+        'This email is waiting for confirmation. Open the link we sent you, or sign in with your password below.';
+      break;
+    default:
+      break;
   }
+
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined,

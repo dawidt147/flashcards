@@ -24,12 +24,12 @@ export async function activateUser(userId: Id<"users">) {
   return await getConvexClient().mutation(api.users.activateUser, { userId });
 }
 
-export async function createPendingAccountWithActivation(
+export async function createAccount(
   email: string,
   userName: string,
   password: string,
   status: string,
-  activationToken: string,
+  source: string
 ): Promise<Id<"users">> {
   const client = getConvexClient();
   const userId = await client.mutation(api.users.createUser, {
@@ -38,6 +38,29 @@ export async function createPendingAccountWithActivation(
     password,
     status,
   });
+
+  if (userId) {
+    await addUserMetaRow(userId, "source", source);
+  }
+
+  return userId;
+}
+
+export async function createPendingAccountWithActivation(
+  email: string,
+  userName: string,
+  password: string,
+  status: string,
+  source: string,
+  activationToken: string,
+): Promise<Id<"users">> {
+  const userId = await createAccount(
+    email,
+    userName,
+    password,
+    status,
+    source
+  );
 
   if (userId && status === "pending") {
     const expiryMs = Date.now() + MS_PER_DAY * ACTIVATION_TOKEN_EXPIRY_DAYS;

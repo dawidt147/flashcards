@@ -11,6 +11,7 @@ import { getOptionValue } from '@/lib/convex/options';
 import {
   getUserByEmail,
   findUserByEmailOrUsername,
+  createAccount,
   createPendingAccountWithActivation,
 } from '@/lib/convex/users';
 
@@ -76,6 +77,44 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     })
   ],
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }): Promise<boolean | string> {
+      if (account?.provider === "google") {
+        if (!profile?.email || !profile?.email_verified) {
+          return false;
+        }
+
+        const existingUser = await getUserByEmail(profile.email);
+
+        if (!existingUser) {
+          const saltRounds = 10;
+          const status = "active";
+          const source = account.provider;
+          const userName = profile.email;
+          const password = cryptoRandomString({
+            length: 32,
+            type: 'url-safe'
+          });
+          const hash = await bcrypt.hash(password, saltRounds);
+          const userId = await createAccount(profile.email, userName, hash, status, source);
+
+          if (userId) {
+            return true;
+          }
+
+          return false;
+        }
+
+        if (existingUser.status === 'pending') {
+          return '/login?activated=oauth-already-pending';
+        }
+
+        return true;
+      }
+
+      return true;
+    },
+  }
 });
 
 export const signUp = async (formData: FormData) => {
@@ -93,6 +132,7 @@ export const signUp = async (formData: FormData) => {
   
       const saltRounds = 10;
       const status = "pending";
+      const source = "credentials"
       const companyName = await getOptionValue("siteTitle") || "";
       const activationToken = getActivationToken();
       const activationLink = await getActivationLink(activationToken);
@@ -100,7 +140,7 @@ export const signUp = async (formData: FormData) => {
       if (!activationLink) return errorCodes.signUpUnknown;
   
       const hash = await bcrypt.hash(password, saltRounds);
-      const userId = await createPendingAccountWithActivation(email, userName, hash, status, activationToken);
+      const userId = await createPendingAccountWithActivation(email, userName, hash, status, source, activationToken);
       const emailProps: WelcomeEmailProps = {
         email: email,
         userName: userName,
