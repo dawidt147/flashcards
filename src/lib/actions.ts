@@ -18,9 +18,9 @@ export async function authenticate(
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return 'Invalid credentials.';
+          return 'invalidCredentials';
         default:
-          return 'Something went wrong.';
+          return 'unknown';
       }
     }
     throw error;
@@ -39,11 +39,11 @@ export async function createAccount(
       }
 
       return {
-        success: 'Account created. Check your email for a link to confirm your address.',
+        success: 'accountCreated',
       };
   } catch (error) {
     if (error) {
-      return { error: "Register error" };
+      return { error: "registerError" };
     }
     throw error;
   }

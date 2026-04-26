@@ -1,5 +1,117 @@
 {
-    "HomePage": {
-      "title": "Hello world!"
+  "Metadata": {
+    "title": "Flashcards",
+    "description": "Create decks, review terms, and study faster with focused flashcards."
+  },
+  "Common": {
+    "logIn": "Log in",
+    "signUp": "Sign up",
+    "language": {
+      "english": "English",
+      "polish": "Polish"
     }
+  },
+  "Navigation": {
+    "products": "Products",
+    "aboutUs": "About us"
+  },
+  "HomePage": {
+    "eyebrow": "Learn faster",
+    "headline": "Flashcards that actually stick",
+    "description": "Create decks, drill terms, and review on any device - the simple way to study like you mean it.",
+    "browseDecks": "Browse decks",
+    "features": {
+      "smartReview": {
+        "title": "Smart review",
+        "body": "Focus on what you still need - not what you already know."
+      },
+      "yourPace": {
+        "title": "Your pace",
+        "body": "Short sessions, clear progress, no clutter."
+      },
+      "anyTopic": {
+        "title": "Any topic",
+        "body": "Languages, exams, trivia - one place for all your sets."
+      }
+    }
+  },
+  "ProductsPage": {
+    "eyebrow": "Study sets",
+    "headline": "Pick a deck and start learning",
+    "description": "These are placeholder cards - wire them to Convex when your decks table is ready.",
+    "terms": "{count, plural, one {# term} other {# terms}}",
+    "study": "Study",
+    "decks": {
+      "spanishVerbs": "Spanish verbs",
+      "biologyCellStructure": "Biology - cell structure",
+      "worldCapitals": "World capitals",
+      "javascriptInterview": "JavaScript interview"
+    }
+  },
+  "AboutPage": {
+    "eyebrow": "About",
+    "headline": "Learning tools, without the noise",
+    "description": "We're building a focused flashcard experience: fast decks, clear progress, and fewer distractions - so you can spend energy on what you're actually learning.",
+    "whyFlashcards": {
+      "title": "Why flashcards?",
+      "body": "Active recall beats passive re-reading. Short prompts and instant checks help your brain strengthen memories where it counts."
+    },
+    "whatsNext": {
+      "title": "What's next",
+      "body": "Decks tied to your account, spaced repetition, and sharing sets with classmates - stay tuned as we grow this app."
+    }
+  },
+  "DashboardPage": {
+    "loggedInAs": "Logged in as: {email}"
+  },
+  "Auth": {
+    "login": {
+      "title": "Log in",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter password",
+      "submit": "Log in",
+      "divider": "or",
+      "google": "Log in with Google"
+    },
+    "signUp": {
+      "title": "Register",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "Enter your username",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter password",
+      "submit": "Sign up"
+    },
+    "messages": {
+      "emailConfirmed": "Your email is confirmed. You can sign in with your password below.",
+      "alreadyActive": "This account is already active. Sign in with your password below.",
+      "oauthAlreadyPending": "This email is waiting for confirmation. Open the link we sent you, or sign in with your password below.",
+      "invalidCredentials": "Invalid credentials.",
+      "accountCreated": "Account created. Check your email for a link to confirm your address.",
+      "registerError": "Registration failed. Please try again.",
+      "accountExists": "User already exists.",
+      "inactiveAccount": "Account is not activated.",
+      "signUpUnknown": "There was an issue with creating your account.",
+      "unknown": "Something went wrong."
+    }
+  },
+  "ActionBar": {
+    "flashcards": "Flashcards",
+    "folder": "Folder",
+    "lightMode": "Light mode",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "Footer": {
+    "copyright": "Copyright 2026 Torbacz company"
+  },
+  "Accessibility": {
+    "searchLabel": "Content search",
+    "searchPlaceholder": "Search...",
+    "logoAlt": "Flashcards logo {type}",
+    "userImageAlt": "User image"
+  }
 }

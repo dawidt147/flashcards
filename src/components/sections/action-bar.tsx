@@ -13,10 +13,14 @@ import { redirect } from 'next/navigation'
 import { useClickAway } from "@uidotdev/usehooks";
 import { useState } from "react";
 import { RefObject } from "react";
+import { useTranslations } from "next-intl";
 
 export default function ActionBar() {
 	const { data: session } = useSession();
 	const [opened, setOpened] = useState("none");
+	const t = useTranslations("ActionBar");
+	const common = useTranslations("Common");
+	const accessibility = useTranslations("Accessibility");
 	const ref:RefObject<HTMLDivElement> = useClickAway((e) => {
 		const el = e.target;
 		const isTrigger = (el as HTMLElement).classList.contains('dropdown-trigger');
@@ -57,7 +61,7 @@ export default function ActionBar() {
 											type="button"
 											className="">
 											<SquareDashedBottom />
-											Flashcards
+											{t("flashcards")}
 										</Button>
 									</li>
 									<li>
@@ -68,7 +72,7 @@ export default function ActionBar() {
 											type="button"
 											className="">
 											<Folder />
-											Folder
+											{t("folder")}
 										</Button>
 									</li>
 								</ul>
@@ -86,7 +90,7 @@ export default function ActionBar() {
                         <Image
 							className="user-image"
 							src={userImageSrc}
-							alt={`user image`}
+							alt={accessibility("userImageAlt")}
 							width="20"
 							height="20"
           				/>
@@ -99,7 +103,7 @@ export default function ActionBar() {
 										<Image
 											className="user-image"
 											src={userImageSrc}
-											alt={`user image`}
+											alt={accessibility("userImageAlt")}
 											width="20"
 											height="20"
 										/>
@@ -120,7 +124,7 @@ export default function ActionBar() {
 											type="button"
 											className="">
 											<SquareDashedBottom />
-											Light Mode
+											{t("lightMode")}
 										</Button>										
 									</li>
 									<li>
@@ -131,7 +135,7 @@ export default function ActionBar() {
 											type="button"
 											className="">
 											<Folder />
-											Settings
+											{t("settings")}
 										</Button>											
 									</li>
 								</ul>
@@ -139,7 +143,7 @@ export default function ActionBar() {
 							<div className="dropdown-section">
 								<Button
 									id="sign-out"
-									label="Sign Out"
+									label={t("signOut")}
 									type="button"
 									className=""
 									onClick={() => signOut()}
@@ -157,7 +161,7 @@ export default function ActionBar() {
             <Link href="/sign-up">
                 <Button
                 id="log-in"
-                label="Sign up"
+                label={common("signUp")}
                 type="button"
                 className="bg-secondary hover:bg-secondary/90 focus:bg-secondary/90"
                 />
@@ -165,7 +169,7 @@ export default function ActionBar() {
             <Link href="/login">
                 <Button
                 id="log-in"
-                label="Log in"
+                label={common("logIn")}
                 type="button"
                 className="bg-primary hover:bg-primary/90 focus:bg-primary/90"
                 />

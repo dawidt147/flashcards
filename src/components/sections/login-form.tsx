@@ -9,29 +9,42 @@ import {
 } from 'lucide-react';
 import Button from "@/components/buttons/button";
 import GoogleLogo from "@/components/icons/google-logo";
-import { useActionState, Fragment } from 'react';
+import { useActionState } from 'react';
 import { authenticate } from 'lib/actions';
 import { useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
+
+const authMessageKeys = [
+  'emailConfirmed',
+  'alreadyActive',
+  'oauthAlreadyPending',
+  'invalidCredentials',
+  'unknown',
+] as const;
+
+type AuthMessageKey = (typeof authMessageKeys)[number];
+
+function isAuthMessageKey(value: string | undefined): value is AuthMessageKey {
+  return authMessageKeys.includes(value as AuthMessageKey);
+}
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
+  const t = useTranslations('Auth');
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
   const activatedMessageStatus = searchParams.get('activated');
   
-  let activatedMessage = '';
+  let activatedMessageKey: AuthMessageKey | null = null;
   switch (activatedMessageStatus) {
     case '1':
-      activatedMessage =
-        'Your email is confirmed. You can sign in with your password below.';
+      activatedMessageKey = 'emailConfirmed';
       break;
     case 'already':
-      activatedMessage =
-        'This account is already active. Sign in with your password below.';
+      activatedMessageKey = 'alreadyActive';
       break;
     case 'oauth-already-pending':
-      activatedMessage =
-        'This email is waiting for confirmation. Open the link we sent you, or sign in with your password below.';
+      activatedMessageKey = 'oauthAlreadyPending';
       break;
     default:
       break;
@@ -41,12 +54,13 @@ export default function LoginForm() {
     authenticate,
     undefined,
   );
+  const errorMessageKey = isAuthMessageKey(errorMessage) ? errorMessage : 'unknown';
  
   return (
     <form action={formAction} className="space-y-3 m-auto">
       <div className="flex-1 px-6 pb-4 pt-8">
         <h1 className="mb-3 text-2xl">
-          Log in
+          {t('login.title')}
         </h1>
         <div className="w-full">
           <div>
@@ -54,7 +68,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium"
               htmlFor="email"
             >
-              Email
+              {t('login.emailLabel')}
             </label>
             <div className="relative">
               <input
@@ -62,7 +76,7 @@ export default function LoginForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder={t('login.emailPlaceholder')}
                 required
               />
               <AtSign className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-300" />
@@ -73,7 +87,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium"
               htmlFor="password"
             >
-              Password
+              {t('login.passwordLabel')}
             </label>
             <div className="relative">
               <input
@@ -81,7 +95,7 @@ export default function LoginForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder={t('login.passwordPlaceholder')}
                 required
                 minLength={6}
               />
@@ -96,17 +110,17 @@ export default function LoginForm() {
           disabled={isPending}
           className="bg-primary mt-4 flex w-full items-center justify-center gap-2"
         >
-          Log in
+          {t('login.submit')}
           <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
-        <div className='text-center mt-4'>or</div>
+        <div className='text-center mt-4'>{t('login.divider')}</div>
         <Button
           id="log-in-with-google"
           type="button"
           className="bg-primary mt-4 flex w-full items-center justify-between gap-2"
           onClick={() => signIn('google', { callbackUrl: callbackUrl })}          
         >
-          Log in with Google
+          {t('login.google')}
           <GoogleLogo width={16} height={16} className='block' />
         </Button> 
         <div
@@ -117,13 +131,13 @@ export default function LoginForm() {
           {errorMessage && (
             <>
               <CircleAlert className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{t(`messages.${errorMessageKey}`)}</p>
             </>
           )}
-          {activatedMessage && (
+          {activatedMessageKey && (
             <>
                 <CircleCheck className="h-5 w-5 text-green-500" />
-                <p className="text-sm text-green-500">{activatedMessage}</p>
+                <p className="text-sm text-green-500">{t(`messages.${activatedMessageKey}`)}</p>
             </>
           )}
         </div>

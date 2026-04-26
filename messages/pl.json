@@ -1,5 +1,117 @@
 {
-    "HomePage": {
-      "title": "Serwus!"
+  "Metadata": {
+    "title": "Flashcards",
+    "description": "Twórz talie, powtarzaj pojęcia i ucz się szybciej z przejrzystymi fiszkami."
+  },
+  "Common": {
+    "logIn": "Zaloguj się",
+    "signUp": "Zarejestruj się",
+    "language": {
+      "english": "Angielski",
+      "polish": "Polski"
     }
+  },
+  "Navigation": {
+    "products": "Produkty",
+    "aboutUs": "O nas"
+  },
+  "HomePage": {
+    "eyebrow": "Ucz się szybciej",
+    "headline": "Fiszki, które naprawdę zostają w głowie",
+    "description": "Twórz talie, ćwicz pojęcia i powtarzaj na dowolnym urządzeniu - prosty sposób na skuteczną naukę.",
+    "browseDecks": "Przeglądaj talie",
+    "features": {
+      "smartReview": {
+        "title": "Inteligentne powtórki",
+        "body": "Skup się na tym, czego jeszcze nie umiesz - nie na tym, co już znasz."
+      },
+      "yourPace": {
+        "title": "Twoje tempo",
+        "body": "Krótkie sesje, czytelny postęp i zero bałaganu."
+      },
+      "anyTopic": {
+        "title": "Dowolny temat",
+        "body": "Języki, egzaminy, ciekawostki - wszystkie zestawy w jednym miejscu."
+      }
+    }
+  },
+  "ProductsPage": {
+    "eyebrow": "Zestawy do nauki",
+    "headline": "Wybierz talię i zacznij naukę",
+    "description": "To są przykładowe karty - podłącz je do Convex, gdy tabela talii będzie gotowa.",
+    "terms": "{count, plural, one {# pojęcie} few {# pojęcia} many {# pojęć} other {# pojęcia}}",
+    "study": "Ucz się",
+    "decks": {
+      "spanishVerbs": "Hiszpańskie czasowniki",
+      "biologyCellStructure": "Biologia - budowa komórki",
+      "worldCapitals": "Stolice świata",
+      "javascriptInterview": "Rozmowa techniczna JavaScript"
+    }
+  },
+  "AboutPage": {
+    "eyebrow": "O aplikacji",
+    "headline": "Narzędzia do nauki bez zbędnego szumu",
+    "description": "Budujemy skupione doświadczenie pracy z fiszkami: szybkie talie, czytelny postęp i mniej rozpraszaczy - żebyś mógł poświęcić energię temu, czego naprawdę się uczysz.",
+    "whyFlashcards": {
+      "title": "Dlaczego fiszki?",
+      "body": "Aktywne przypominanie działa lepiej niż bierne ponowne czytanie. Krótkie pytania i szybka informacja zwrotna pomagają wzmacniać pamięć tam, gdzie ma to znaczenie."
+    },
+    "whatsNext": {
+      "title": "Co dalej",
+      "body": "Talie przypisane do konta, powtórki interwałowe i udostępnianie zestawów znajomym z klasy - obserwuj, jak rozwijamy aplikację."
+    }
+  },
+  "DashboardPage": {
+    "loggedInAs": "Zalogowano jako: {email}"
+  },
+  "Auth": {
+    "login": {
+      "title": "Zaloguj się",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Wpisz adres email",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Wpisz hasło",
+      "submit": "Zaloguj się",
+      "divider": "lub",
+      "google": "Zaloguj się przez Google"
+    },
+    "signUp": {
+      "title": "Rejestracja",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Wpisz adres email",
+      "usernameLabel": "Nazwa użytkownika",
+      "usernamePlaceholder": "Wpisz nazwę użytkownika",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Wpisz hasło",
+      "submit": "Zarejestruj się"
+    },
+    "messages": {
+      "emailConfirmed": "Twój adres email został potwierdzony. Możesz zalogować się poniżej za pomocą hasła.",
+      "alreadyActive": "To konto jest już aktywne. Zaloguj się poniżej za pomocą hasła.",
+      "oauthAlreadyPending": "Ten adres email czeka na potwierdzenie. Otwórz wysłany link albo zaloguj się poniżej za pomocą hasła.",
+      "invalidCredentials": "Nieprawidłowe dane logowania.",
+      "accountCreated": "Konto zostało utworzone. Sprawdź email, aby potwierdzić adres.",
+      "registerError": "Rejestracja nie powiodła się. Spróbuj ponownie.",
+      "accountExists": "Użytkownik już istnieje.",
+      "inactiveAccount": "Konto nie jest aktywowane.",
+      "signUpUnknown": "Wystąpił problem podczas tworzenia konta.",
+      "unknown": "Coś poszło nie tak."
+    }
+  },
+  "ActionBar": {
+    "flashcards": "Fiszki",
+    "folder": "Folder",
+    "lightMode": "Tryb jasny",
+    "settings": "Ustawienia",
+    "signOut": "Wyloguj się"
+  },
+  "Footer": {
+    "copyright": "Copyright 2026 Torbacz company"
+  },
+  "Accessibility": {
+    "searchLabel": "Wyszukiwanie treści",
+    "searchPlaceholder": "Szukaj...",
+    "logoAlt": "Logo Flashcards {type}",
+    "userImageAlt": "Zdjęcie użytkownika"
+  }
 }

@@ -1,9 +1,11 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useCookie } from '@/lib/cookies';
 
 export default function LanguageSwitcher() {
-    const [locale, setLocale, deleteLocale] = useCookie('locale');
+    const [locale, setLocale] = useCookie('locale');
+    const t = useTranslations('Common.language');
 
     return (
         <div>
@@ -13,8 +15,8 @@ export default function LanguageSwitcher() {
                         window.location.reload();
                     }} 
                     value={locale}>
-                <option value="en">English</option>
-                <option value="pl">Polish</option>
+                <option value="en">{t('english')}</option>
+                <option value="pl">{t('polish')}</option>
             </select>
         </div>
     );

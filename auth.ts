@@ -18,10 +18,10 @@ import {
 const API_ACTIVATE_ACCOUNT_SLUG = '/api/auth/activate/';
 
 const errorCodes = {
-  invalidCredentials: "Invalid username or password",
-  inactiveAccount: "Account is not activated",
-  accountExists: "User already exists",
-  signUpUnknown: "There was an issue with creating your account",
+  invalidCredentials: "invalidCredentials",
+  inactiveAccount: "inactiveAccount",
+  accountExists: "accountExists",
+  signUpUnknown: "signUpUnknown",
 }
 
 function authError(message: string) {
@@ -78,7 +78,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }): Promise<boolean | string> {
+    async signIn({ account, profile }): Promise<boolean | string> {
       if (account?.provider === "google") {
         if (!profile?.email || !profile?.email_verified) {
           return false;

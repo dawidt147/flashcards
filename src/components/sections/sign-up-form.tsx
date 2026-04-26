@@ -12,9 +12,28 @@ import Button from "@/components/buttons/button"
 import { useActionState } from 'react';
 import { createAccount } from 'lib/actions';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+
+const authMessageKeys = [
+  'accountCreated',
+  'registerError',
+  'accountExists',
+  'invalidCredentials',
+  'signUpUnknown',
+  'unknown',
+] as const;
+
+type AuthMessageKey = (typeof authMessageKeys)[number];
+
+function getAuthMessageKey(value: string | undefined): AuthMessageKey {
+  return authMessageKeys.includes(value as AuthMessageKey)
+    ? (value as AuthMessageKey)
+    : 'unknown';
+}
  
 export default function SignUpForm() {
   const searchParams = useSearchParams();
+  const t = useTranslations('Auth');
   const callbackUrl = searchParams.get('callbackUrl') || '/';
   const [state, formAction, isPending] = useActionState(
     createAccount,
@@ -27,14 +46,14 @@ export default function SignUpForm() {
     message = (
         <>
             <CircleAlert className="h-5 w-5 text-red-500" />
-            <p className="text-sm text-red-500">{state.error}</p>
+            <p className="text-sm text-red-500">{t(`messages.${getAuthMessageKey(state.error)}`)}</p>
         </>
     );
   } else if (state?.success) {
     message = (
         <>
             <CircleCheck className="h-5 w-5 text-green-500" />
-            <p className="text-sm text-green-500">{state.success}</p>
+            <p className="text-sm text-green-500">{t(`messages.${getAuthMessageKey(state.success)}`)}</p>
         </>
     );
   }
@@ -43,7 +62,7 @@ export default function SignUpForm() {
     <form action={formAction} className="space-y-3 m-auto">
       <div className="flex-1 px-6 pb-4 pt-8">
         <h1 className="mb-3 text-2xl">
-          Register
+          {t('signUp.title')}
         </h1>
         <div className="w-full">
           <div>
@@ -51,7 +70,7 @@ export default function SignUpForm() {
               className="mb-3 mt-5 block text-xs font-medium"
               htmlFor="email"
             >
-              Email
+              {t('signUp.emailLabel')}
             </label>
             <div className="relative">
               <input
@@ -59,7 +78,7 @@ export default function SignUpForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder={t('signUp.emailPlaceholder')}
                 required
               />
               <AtSign className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-300" />
@@ -70,7 +89,7 @@ export default function SignUpForm() {
               className="mb-3 mt-5 block text-xs font-medium"
               htmlFor="userName"
             >
-              Username
+              {t('signUp.usernameLabel')}
             </label>
             <div className="relative">
               <input
@@ -78,7 +97,7 @@ export default function SignUpForm() {
                 id="userName"
                 type="text"
                 name="userName"
-                placeholder="Enter your Username"
+                placeholder={t('signUp.usernamePlaceholder')}
                 required
               />
               <CircleUser className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-300" />
@@ -89,7 +108,7 @@ export default function SignUpForm() {
               className="mb-3 mt-5 block text-xs font-medium"
               htmlFor="password"
             >
-              Password
+              {t('signUp.passwordLabel')}
             </label>
             <div className="relative">
               <input
@@ -97,7 +116,7 @@ export default function SignUpForm() {
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder={t('signUp.passwordPlaceholder')}
                 required
                 minLength={6}
               />
@@ -112,7 +131,7 @@ export default function SignUpForm() {
           disabled={isPending}
           className="bg-primary mt-4 flex w-full items-center justify-center gap-2"
         >
-          Sign Up
+          {t('signUp.submit')}
           <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div
