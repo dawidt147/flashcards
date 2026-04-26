@@ -1,11 +1,13 @@
 "use client";
 
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
 
 export default function Home() {
+  const t = useTranslations('HomePage');
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <Header />
@@ -18,6 +20,9 @@ export default function Home() {
             <h1 className="text-balance text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">
               Flashcards that actually stick
             </h1>
+            <h2>
+              {t('title')}
+            </h2>
             <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
               Create decks, drill terms, and review on any device — the simple way
               to study like you mean it.
@@ -65,32 +70,6 @@ export default function Home() {
                 </p>
               </div>
             ))}
-          </div>
-
-          <div className="flex flex-col items-center gap-4 border-t border-zinc-200 pt-10 dark:border-zinc-800 sm:flex-row sm:justify-center">
-            <a
-              className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:opacity-90 sm:w-auto md:min-w-[158px]"
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                className="dark:invert"
-                src="/vercel.svg"
-                alt=""
-                width={16}
-                height={16}
-              />
-              Deploy
-            </a>
-            <a
-              className="flex h-12 w-full items-center justify-center rounded-full border border-zinc-300 px-5 transition-colors hover:bg-zinc-100 dark:border-zinc-600 dark:hover:bg-zinc-800 sm:w-auto md:min-w-[158px]"
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Next.js docs
-            </a>
           </div>
         </section>
       </main>
