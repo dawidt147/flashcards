@@ -37,7 +37,7 @@ export default function ActionBar() {
 
     if ( session ) {
 		//const userImageSrc = session.user?.image ?? '/user-placeholder.webp';
-		const userImageSrc = '/user-placeholder.webp';
+		const userImageSrc = '/assets/user-placeholder.webp';
         return (
             <section className="action-bar flex gap-2">
                 <div className="button-with-dropdown relative">
@@ -55,7 +55,7 @@ export default function ActionBar() {
 								<ul>
 									<li>
 										<Button
-											onClick={() => redirect("/#")} // Create draft course with autosave and redirect there
+											onClick={() => redirect("/dashboard/create-set")}
 											id="add-new-course-flashcards"
 											label=""
 											type="button"
@@ -66,7 +66,7 @@ export default function ActionBar() {
 									</li>
 									<li>
 										<Button
-											onClick={() => redirect("/#")} // Display modal with folder name to create
+											onClick={() => redirect("/xd")} // Display modal with folder name to create
 											id="add-content-dropdown-trigger"
 											label=""
 											type="button"

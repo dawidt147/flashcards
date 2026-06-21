@@ -21,6 +21,32 @@ export interface IconProps {
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     label?: ReactNode;
 };
+
 export interface SearchBarProps {
     placeholder: string;
+}
+
+export type Language = "english" | "polish";
+
+export interface LanguageChooserProps {
+    id: string;
+    name: string;
+    label?: string;
+    defaultValue?: Language;
+    className?: string;
+}
+
+export interface Flashcard {
+    id: string;
+    term?: string;
+    definition?: string;
+}
+
+export interface FlashcardsFormProps {
+    title?: string;
+    description?: string;
+    visibility?: "public" | "private";
+    termLanguage?: Language;
+    definitionLanguage?: Language;
+    flashcards?: Array<Flashcard>;
 }

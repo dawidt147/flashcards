@@ -7,7 +7,7 @@ export function EmailLogo({
   variant = 'default',
 }: EmailLogoProps) {
   const origin = siteUrl.replace(/\/$/, '');
-  const src = `${origin}/logo-${variant}.svg`;
+  const src = `${origin}/assets/logo-${variant}.svg`;
 
   return (
     <Section className="mb-0 text-center">

@@ -13,7 +13,11 @@
   },
   "Navigation": {
     "products": "Produkty",
-    "aboutUs": "O nas"
+    "aboutUs": "O nas",
+    "homePage": "Strona Główna",
+    "library": "Twoje Zasoby",
+    "folders": "Twoje Foldery",
+    "addFolder": "Dodaj Nowy Folder"
   },
   "HomePage": {
     "eyebrow": "Ucz się szybciej",

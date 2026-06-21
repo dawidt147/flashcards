@@ -7,16 +7,16 @@ const Logo: React.FC<LogoProps> = ({type, width, height, className}) => {
     const t = useTranslations("Accessibility");
 
     return (
-        <Link href="/">
-          <Image
-            className={className}
-            src={`/logo-${type}.svg`}
-            alt={t("logoAlt", { type })}
-            width={width}
-            height={height}
-            priority
-          />
-        </Link>
+      <Link href="/">
+        <Image
+          className={className}
+          src={`/assets/logo-${type}.svg`}
+          alt={t("logoAlt", { type })}
+          width={width}
+          height={height}
+          priority
+        />
+      </Link>
     );
 }
 export default Logo;

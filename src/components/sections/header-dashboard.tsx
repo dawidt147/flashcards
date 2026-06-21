@@ -5,7 +5,7 @@ import ActionBar from "./action-bar";
 
 export default function HeaderDashboard() {
     const t = useTranslations("Accessibility");
-
+ 
     return (
         <header className="header-main header-dashboard sticky top-0 right-0 grid grid-cols-4 p-4 items-center bg-background z-50">
             <div className="col-span-1">
