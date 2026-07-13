@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as courses from "../courses.js";
+import type * as flashcards from "../flashcards.js";
 import type * as options from "../options.js";
 import type * as userMeta from "../userMeta.js";
 import type * as users from "../users.js";
@@ -19,6 +21,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  courses: typeof courses;
+  flashcards: typeof flashcards;
   options: typeof options;
   userMeta: typeof userMeta;
   users: typeof users;

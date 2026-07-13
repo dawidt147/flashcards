@@ -68,6 +68,28 @@
   "DashboardPage": {
     "loggedInAs": "Zalogowano jako: {email}"
   },
+  "LibraryPage": {
+    "title": "Twoje zasoby",
+    "tabs": {
+      "flashcards": "Fiszki",
+      "tests": "Testy",
+      "folders": "Foldery"
+    },
+    "sort": {
+      "recent": "Ostatnie",
+      "created": "Utworzone"
+    },
+    "searchPlaceholder": "Szukaj fiszek",
+    "searchLabel": "Szukaj fiszek",
+    "terms": "{count, plural, one {# pojęcie} few {# pojęcia} many {# pojęć} other {# pojęcia}}",
+    "empty": "Nie masz jeszcze żadnych zestawów fiszek.",
+    "dateGroups": {
+      "minutesAgo": "Kilka minut temu",
+      "today": "Dzisiaj",
+      "thisWeek": "W tym tygodniu",
+      "monthYear": "W {date}"
+    }
+  },
   "Auth": {
     "login": {
       "title": "Zaloguj się",

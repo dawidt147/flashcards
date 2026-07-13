@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { Id } from "@/root/convex/_generated/dataModel";
 
 export interface ImageProps {
     width: number;
@@ -43,10 +44,25 @@ export interface Flashcard {
 }
 
 export interface FlashcardsFormProps {
+    operation: "create" | "edit" | "delete";
     title?: string;
     description?: string;
     visibility?: "public" | "private";
     termLanguage?: Language;
     definitionLanguage?: Language;
     flashcards?: Array<Flashcard>;
+}
+
+export interface LibrarySetItem {
+    id: Id<"courses">;
+    title: string;
+    termCount: number;
+    author: string;
+    href: string;
+    creationTime: number;
+}
+
+export interface LibrarySetGroupData {
+    label: string;
+    items: Array<LibrarySetItem>;
 }

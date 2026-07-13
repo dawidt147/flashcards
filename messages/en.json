@@ -68,6 +68,28 @@
   "DashboardPage": {
     "loggedInAs": "Logged in as: {email}"
   },
+  "LibraryPage": {
+    "title": "Your library",
+    "tabs": {
+      "flashcards": "Flashcards",
+      "tests": "Tests",
+      "folders": "Folders"
+    },
+    "sort": {
+      "recent": "Recent",
+      "created": "Created"
+    },
+    "searchPlaceholder": "Search flashcards",
+    "searchLabel": "Search flashcards",
+    "terms": "{count, plural, one {# term} other {# terms}}",
+    "empty": "You don't have any flashcard sets yet.",
+    "dateGroups": {
+      "minutesAgo": "A few minutes ago",
+      "today": "Today",
+      "thisWeek": "This week",
+      "monthYear": "In {date}"
+    }
+  },
   "Auth": {
     "login": {
       "title": "Log in",

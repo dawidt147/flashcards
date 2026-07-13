@@ -13,12 +13,15 @@ export default function CreateNewSetPage() {
           >
             Create
           </Button>
-          <Button id="create-set__submit-and-practice" className="bg-primary text-sm">
+          <Button
+            id="create-set__submit-and-practice"
+            className="bg-primary text-sm"
+          >
             Create and practice
           </Button>
         </div>
       </section>
-      <FlashcardsForm />
+      <FlashcardsForm operation="create" />
     </main>
   );
 }

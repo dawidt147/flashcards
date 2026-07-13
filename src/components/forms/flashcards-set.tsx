@@ -8,6 +8,8 @@ import {
     Mic,
     Palette,
     Trash2,
+    CircleAlert,
+    CircleCheck
 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { DragDropProvider } from '@dnd-kit/react';
@@ -15,7 +17,9 @@ import { useSortable } from '@dnd-kit/react/sortable';
 import { move } from '@dnd-kit/helpers';
 import Button from "../buttons/button";
 import LanguageChooser from "../inputs/language-chooser";
-import { useState, useRef, useId } from "react";
+import { useState, useRef, useId, SyntheticEvent, useActionState } from "react";
+import { useRouter } from 'next/navigation';
+import { submitForm } from "@/lib/actions/flashcards";
 
 function FlashcardRow({ index, flashcard, deleteCard }: 
     { index:number, flashcard: Flashcard, deleteCard:(cardId: string) => void }) {
@@ -95,6 +99,7 @@ function FlashcardRow({ index, flashcard, deleteCard }:
                         placeholder={isEmpty ? "Enter term" : undefined}
                         rows={4}
                         className="flashcards-form__field-input min-h-24 resize-none border-zinc-200 bg-white dark:border-zinc-600 dark:bg-zinc-800/60"
+                        required
                     />
                     <span className="flashcards-form__field-label text-xs font-semibold uppercase tracking-wide text-zinc-500">
                         Term
@@ -107,6 +112,7 @@ function FlashcardRow({ index, flashcard, deleteCard }:
                         placeholder={isEmpty ? "Enter definition" : undefined}
                         rows={4}
                         className="flashcards-form__field-input min-h-24 resize-none border-zinc-200 bg-white dark:border-zinc-600 dark:bg-zinc-800/60"
+                        required
                     />
                     <span className="flashcards-form__field-label text-xs font-semibold uppercase tracking-wide text-zinc-500">
                         Definition
@@ -125,6 +131,7 @@ function FlashcardRow({ index, flashcard, deleteCard }:
 }
 
 const FlashcardsForm = ({
+    operation,
     title,
     description,
     visibility = "public",
@@ -132,12 +139,35 @@ const FlashcardsForm = ({
     definitionLanguage,
     flashcards,
 }: FlashcardsFormProps) => {
+    title = 'title';
+    description = 'description';
+
     const DEFAULT_FLASHCARDS: Flashcard[] = [
-        { id: `flashcard-${useId()}` },
-        { id: `flashcard-${useId()}` },
+        { id: `flashcard-${useId()}`, term: 'term1', definition: 'definition1' },
+        { id: `flashcard-${useId()}`, term: 'term2', definition: 'definition2' },
     ];
     const [cards, setCards] = useState(flashcards ?? DEFAULT_FLASHCARDS);
+    const [state, formAction, isPending] = useActionState(submitForm, undefined);
+    const router = useRouter();
 
+    let message: React.ReactNode = null;
+
+    if (state?.error) {
+        message = (
+            <>
+                <CircleAlert className="h-5 w-5 text-red-500" />
+                <p className="text-sm text-red-500">test</p>
+            </>
+        );
+    } else if (state?.url !== "") {
+        message = (
+            <>
+                <CircleCheck className="h-5 w-5 text-green-500" />
+                <p className="text-sm text-green-500">test</p>
+            </>
+        );
+    }
+    
     function addCards(newCards: Flashcard[] = [{ id: `flashcard-${nanoid()}` }]) {
         setCards((cards) => [...cards, ...newCards]);
     }
@@ -148,8 +178,39 @@ const FlashcardsForm = ({
         }
     }
 
+    async function onSubmit(event: SyntheticEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const flashcardsData = cards.map((card) => ({
+            id: card.id,
+            term: formData.get(`${card.id}-term`)?.toString() ?? '',
+            definition: formData.get(`${card.id}-definition`)?.toString() ?? '',
+        })).filter((c) => c.term.trim() && c.definition.trim());
+        
+        const payload = {
+            visibility: formData.get('visibility'),
+            title: formData.get('title'),
+            description: formData.get('description'),
+            flashcards: flashcardsData,
+            type: 'flashcards'
+        }
+        
+        const response = await fetch('/api/flashcards/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.url) {
+            router.push(data.url);
+        }
+    }
+
     return (
-        <form className="flashcards-form flex flex-col gap-6">
+        <form className="flashcards-form flex flex-col gap-6" action={formAction}>
             <section className="flashcards-form__meta flex flex-col gap-4">
                 <div className="flashcards-form__meta-top flex flex-wrap items-center gap-3">
                     <select
@@ -167,6 +228,7 @@ const FlashcardsForm = ({
                     defaultValue={title ?? ""}
                     placeholder="Title"
                     className="flashcards-form__title border-0 bg-transparent px-0 py-2 text-2xl font-semibold shadow-none focus:ring-0"
+                    required
                 />
                 <input
                     type="text"
@@ -175,6 +237,8 @@ const FlashcardsForm = ({
                     placeholder="Add a description..."
                     className="flashcards-form__description border-0 bg-transparent px-0 py-1 text-base text-zinc-500 shadow-none focus:ring-0"
                 />
+                <input type="hidden" name="type" value="flashcards" />
+                <input type="hidden" name="operation" value={operation} />
             </section>
 
             <section className="flashcards-form__toolbar flex flex-wrap items-end justify-between gap-3">
@@ -220,7 +284,7 @@ const FlashcardsForm = ({
                 }}>
                     <ul className="flex flex-col gap-4">
                         {cards.map((flashcard, index) => (
-                            <FlashcardRow 
+                            <FlashcardRow
                                 key={flashcard.id} 
                                 index={index} 
                                 flashcard={flashcard}
@@ -228,6 +292,7 @@ const FlashcardsForm = ({
                         ))}
                     </ul>
                 </DragDropProvider>
+                <input type="hidden" name="flashcards" value={JSON.stringify(cards)} />
             </section>
 
             <section className="flashcards-form__footer flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 pt-6 dark:border-zinc-700/60">
@@ -240,15 +305,23 @@ const FlashcardsForm = ({
                     + Add card
                 </Button>
                 <Button
-                    type="button"
+                    type="submit"
                     id="flashcards-form-create"
                     className="bg-primary text-sm"
+                    disabled={isPending}
                 >
                     Create
                 </Button>
             </section>
+            <div
+            className="flex h-8 items-end space-x-1"
+            aria-live="polite"
+            aria-atomic="true"
+            >
+                {message}
+            </div>
         </form>
     );
 };
-
+ 
 export default FlashcardsForm;

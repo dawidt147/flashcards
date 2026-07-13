@@ -5,18 +5,22 @@ import { v } from "convex/values";
 export default defineSchema({
   courses: defineTable({
     authorId: v.id("users"),
-    type: v.string(),
+    type: v.union(v.literal("flashcards"), v.literal("tests")),
     slug: v.string(),
-    visibility: v.string(),
+    permalink: v.string(),
+    visibility: v.union(v.literal("public"), v.literal("private")),
     title: v.string(),
     description: v.string(),
-  }),
+  })
+  .index("bySlug", ["slug"])
+  .index("byAuthorId", ["authorId"]),
 
   flashcards: defineTable({
     courseId: v.id("courses"),
-    templateId: v.id("templates"),
+    //templateId: v.id("templates"),
     data: v.any()
-  }),
+  })
+  .index("byCourseId", ["courseId"]),
 
   options: defineTable({
     name: v.string(),
