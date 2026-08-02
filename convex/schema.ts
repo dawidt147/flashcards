@@ -3,7 +3,13 @@ import { v } from "convex/values";
 
 // Define a messages table with an index.
 export default defineSchema({
+  counters: defineTable({
+    name: v.string(),
+    value: v.number(),
+  }).index("byName", ["name"]),
+
   courses: defineTable({
+    key: v.number(),
     authorId: v.id("users"),
     type: v.union(v.literal("flashcards"), v.literal("tests")),
     slug: v.string(),
@@ -12,21 +18,20 @@ export default defineSchema({
     title: v.string(),
     description: v.string(),
   })
-  .index("bySlug", ["slug"])
-  .index("byAuthorId", ["authorId"]),
+    .index("bySlug", ["slug"])
+    .index("byAuthorId", ["authorId"])
+    .index("byKey", ["key"]),
 
   flashcards: defineTable({
     courseId: v.id("courses"),
     //templateId: v.id("templates"),
-    data: v.any()
-  })
-  .index("byCourseId", ["courseId"]),
+    data: v.any(),
+  }).index("byCourseId", ["courseId"]),
 
   options: defineTable({
     name: v.string(),
     value: v.string(),
-  })
-  .index("byOption", ["name"]),
+  }).index("byOption", ["name"]),
 
   taxonomy: defineTable({
     type: v.string(),
@@ -50,23 +55,23 @@ export default defineSchema({
   tests: defineTable({
     courseId: v.id("courses"),
     templateId: v.id("templates"),
-    data: v.any()
+    data: v.any(),
   }),
-  
+
   users: defineTable({
     userName: v.string(),
     password: v.string(),
     email: v.string(),
     status: v.string(),
   })
-  .index("byEmail", ["email"])
-  .index("byUsername", ["userName"]),
+    .index("byEmail", ["email"])
+    .index("byUsername", ["userName"]),
 
   userMeta: defineTable({
     userId: v.id("users"),
     name: v.string(),
     value: v.string(),
   })
-  .index("byUserMeta", ["userId", "name"])
-  .index("byNameAndValue", ["name", "value"]),
+    .index("byUserMeta", ["userId", "name"])
+    .index("byNameAndValue", ["name", "value"]),
 });

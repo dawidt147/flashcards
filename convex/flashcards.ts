@@ -37,6 +37,27 @@ export const getFlashcardsByCourseId = query({
   },
 });
 
+export const getFlashcardsByCourseKey = query({
+  args: {
+    key: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const course = await ctx.db
+      .query("courses")
+      .withIndex("byKey", (q) => q.eq("key", args.key))
+      .unique();
+
+    if (!course) {
+      return [];
+    }
+
+    return await ctx.db
+      .query("flashcards")
+      .withIndex("byCourseId", (q) => q.eq("courseId", course._id))
+      .collect();
+  },
+});
+
 export const removeFlashcard = mutation({
   args: {
     flashcardId: v.id("flashcards")

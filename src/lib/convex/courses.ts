@@ -15,15 +15,13 @@ export async function createCourse(
 ): Promise<Id<"courses">> {
   const client = getConvexClient();
   const slug = await getUniqueSlug(generatedSlug, authorId);
-  const permalink = generatePermalink(slug, authorId);
   const id = await client.mutation(api.courses.createCourse, {
     authorId,
     type,
     slug,
-    permalink,
     visibility,
     title,
-    description
+    description,
   });
 
   if (id) {
@@ -36,6 +34,8 @@ export async function createCourse(
 export async function updateCourse(
   courseId: Id<"courses">,
   authorId: Id<"users">,
+  key: number,
+  type: "flashcards" | "tests",
   generatedSlug: string,
   visibility: "public" | "private",
   title: string,
@@ -44,14 +44,14 @@ export async function updateCourse(
 ): Promise<Id<"courses"> | null> {
   const client = getConvexClient();
   const slug = await getUniqueSlug(generatedSlug, authorId);
-  const permalink = generatePermalink(slug, authorId);
   const id = await client.mutation(api.courses.updateCourse, {
+    key,
     slug,
-    permalink,
+    type,
     visibility,
     title,
     description,
-    courseId
+    courseId,
   });
 
   if (id) {
@@ -64,55 +64,58 @@ export async function updateCourse(
 
 export async function courseSlugExists(
   slug: string,
-  userId: Id<"users">
+  userId: Id<"users">,
 ): Promise<boolean> {
   const client = getConvexClient();
-  
+
   return await client.query(api.courses.courseSlugExists, {
     slug,
-    userId
+    userId,
   });
 }
 
 export async function getCourseById(
-  courseId: Id<"courses">
+  courseId: Id<"courses">,
 ): Promise<Doc<"courses"> | null> {
   const client = getConvexClient();
-  
+
   return await client.query(api.courses.getCourseById, {
-    courseId
+    courseId,
+  });
+}
+
+export async function getCourseByKey(
+  key: number,
+): Promise<Doc<"courses"> | null> {
+  const client = getConvexClient();
+
+  return await client.query(api.courses.getCourseByKey, {
+    key,
   });
 }
 
 async function getUniqueSlug(
   slug: string,
-  authorId: Id<"users">
+  authorId: Id<"users">,
 ): Promise<string> {
-    const baseSlug = slug;
-    let finalSlug = baseSlug;
-    let counter = 1;
+  const baseSlug = slug;
+  let finalSlug = baseSlug;
+  let counter = 1;
 
-    while (await courseSlugExists(finalSlug, authorId)) {
-      finalSlug = `${baseSlug}-${counter}`;
-      counter++;
-    }
+  while (await courseSlugExists(finalSlug, authorId)) {
+    finalSlug = `${baseSlug}-${counter}`;
+    counter++;
+  }
 
-    return finalSlug;
-}
-
-function generatePermalink(
-  slug: string,
-  authorId: Id<"users">
-): string {
-  return `/dashboard/${authorId}/${slug}`;
+  return finalSlug;
 }
 
 export async function getUserCourses(
-  userId: Id<"users">
+  userId: Id<"users">,
 ): Promise<Array<Doc<"courses"> | null>> {
   const client = getConvexClient();
-  
+
   return await client.query(api.courses.getUserCourses, {
-    userId
+    userId,
   });
 }

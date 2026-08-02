@@ -3,11 +3,10 @@ import Footer from "@/components/sections/footer";
 import SidebarDashboard from "@/components/sections/sidebar-dashboard";
 
 export default function DashboardLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans text-foreground">
       <HeaderDashboard />

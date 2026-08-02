@@ -13,6 +13,16 @@ export async function getFlashcardsByCourseId(
   });
 }
 
+export async function getFlashcardsByCourseKey(
+  key: number,
+): Promise<Array<Doc<"flashcards">>> {
+  const client = getConvexClient();
+
+  return await client.query(api.flashcards.getFlashcardsByCourseKey, {
+    key,
+  });
+}
+
 export async function createFlashcard(
   courseId: Id<"courses">,
   data: object

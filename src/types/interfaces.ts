@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { Id } from "@/root/convex/_generated/dataModel";
+import { z } from 'zod';
 
 export interface ImageProps {
     width: number;
@@ -27,7 +28,11 @@ export interface SearchBarProps {
     placeholder: string;
 }
 
-export type Language = "english" | "polish";
+const languages = ["english", "polish"] as const;
+
+export type Language = (typeof languages)[number];
+
+export const languageSchema = z.enum(languages);
 
 export interface LanguageChooserProps {
     id: string;
@@ -41,6 +46,8 @@ export interface Flashcard {
     id: string;
     term?: string;
     definition?: string;
+    termLanguage?: Language;
+    definitionLanguage?: Language;
 }
 
 export interface FlashcardsFormProps {
@@ -55,6 +62,7 @@ export interface FlashcardsFormProps {
 
 export interface LibrarySetItem {
     id: Id<"courses">;
+    key: number;
     title: string;
     termCount: number;
     author: string;
