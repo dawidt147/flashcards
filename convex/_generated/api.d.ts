@@ -12,6 +12,8 @@ import type * as counters from "../counters.js";
 import type * as courses from "../courses.js";
 import type * as flashcards from "../flashcards.js";
 import type * as options from "../options.js";
+import type * as taxonomies from "../taxonomies.js";
+import type * as taxonomyRelationships from "../taxonomyRelationships.js";
 import type * as userMeta from "../userMeta.js";
 import type * as users from "../users.js";
 
@@ -26,6 +28,8 @@ declare const fullApi: ApiFromModules<{
   courses: typeof courses;
   flashcards: typeof flashcards;
   options: typeof options;
+  taxonomies: typeof taxonomies;
+  taxonomyRelationships: typeof taxonomyRelationships;
   userMeta: typeof userMeta;
   users: typeof users;
 }>;

@@ -125,8 +125,6 @@ export async function submitForm(
     return { error: "Unauthorized", url: "" };
   }
 
-  console.log(formData);
-
   const user = await getUserByEmail(session?.user?.email as string);
   const termLanguage = formData.get("termLanguage") as Language;
   const definitionLanguage = formData.get("definitionLanguage") as Language;

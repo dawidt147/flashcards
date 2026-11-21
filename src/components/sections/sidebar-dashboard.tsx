@@ -3,9 +3,15 @@
 import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import Button from "../buttons/button";
+import { useModal } from "@/providers/ModalProvider";
+import { Folder } from "@/types/interfaces";
+import { Link } from "@react-email/components";
 
-export default function SidebarDashboard() {
+type SidebarDashboardProps = { folders: Folder[] };
+
+export default function SidebarDashboard({ folders }: SidebarDashboardProps) {
   const t = useTranslations("Navigation");
+  const { openModal } = useModal();
 
   return (
     <aside className="sidebar sidebar-dashboard">
@@ -39,7 +45,7 @@ export default function SidebarDashboard() {
       <div className="sidebar-group">
         <div className="sidebar-group-heading">{t("folders")}</div>
         <Button
-          onClick={() => redirect("/dashboard")}
+          onClick={() => openModal("new-folder")}
           id="sidebar-add-folder"
           label=""
           type="button"
@@ -47,6 +53,13 @@ export default function SidebarDashboard() {
         >
           {t("addFolder")}
         </Button>
+        <ul>
+          {folders.map((folder) => (
+            <li key={folder.slug}>
+              <Link href={"/" + folder.slug}>{folder.title}</Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </aside>
   );

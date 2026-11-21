@@ -4,7 +4,8 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { ConvexClientProvider } from "@/providers/ConvexClientProvider";
 import { SessionClientProvider } from "@/providers/SessionClientProvider";
-import { NextIntlClientProvider } from 'next-intl';
+import { NextIntlClientProvider } from "next-intl";
+import { ModalProvider } from "@/providers/ModalProvider";
 import "@/assets/globals.css";
 
 const geistSans = Geist({
@@ -43,7 +44,7 @@ export default async function RootLayout({
         <SessionClientProvider>
           <ConvexClientProvider>
             <NextIntlClientProvider>
-              {children}
+              <ModalProvider>{children}</ModalProvider>
             </NextIntlClientProvider>
           </ConvexClientProvider>
         </SessionClientProvider>

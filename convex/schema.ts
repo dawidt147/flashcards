@@ -33,17 +33,23 @@ export default defineSchema({
     value: v.string(),
   }).index("byOption", ["name"]),
 
-  taxonomy: defineTable({
+  taxonomies: defineTable({
+    authorId: v.id("users"),
     type: v.string(),
     slug: v.string(),
     title: v.string(),
     description: v.string(),
-  }),
+  })
+    .index("byAuthorId", ["authorId"])
+    .index("byAuthorIdAndType", ["authorId", "type"])
+    .index("bySlug", ["slug"]),
 
   taxonomyRelationships: defineTable({
     courseId: v.id("courses"),
-    taxonomyId: v.id("taxonomy"),
-  }),
+    taxonomyId: v.id("taxonomies"),
+  })
+    .index("byCourseId", ["courseId"])
+    .index("byTaxonomyId", ["taxonomyId"]),
 
   templates: defineTable({
     authorId: v.id("users"),

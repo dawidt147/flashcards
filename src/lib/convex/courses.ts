@@ -94,7 +94,7 @@ export async function getCourseByKey(
   });
 }
 
-async function getUniqueSlug(
+export async function getUniqueSlug(
   slug: string,
   authorId: Id<"users">,
 ): Promise<string> {

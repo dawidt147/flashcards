@@ -9,7 +9,6 @@ import {
   Palette,
   Trash2,
   CircleAlert,
-  CircleCheck,
 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { DragDropProvider } from "@dnd-kit/react";
